@@ -1,0 +1,15 @@
+# 配置说明 https://prettier.io/docs/en/options.html
+# 单行最大宽度
+printWidth: 80
+
+# 强制分号
+semi: true
+
+# 强制使用单引号
+singleQuote: true
+
+# 结尾逗号
+trailingComma: es5
+
+# 箭头函数唯一参数时是否需要括号
+arrowParens: avoid

@@ -1,0 +1,17 @@
+# system
+.DS_STORE
+
+# editor
+.idea
+.vscode
+
+# nodejs
+node_modules
+
+# project
+/dist/
+# talos默认构建产出目录为build/，构建之前会删除build中的内容
+/build/
+
+*.log
+*.lock
