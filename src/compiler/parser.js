@@ -7,17 +7,50 @@ const startTagClose = /^\s*(\/?)>/; // 匹配标签结束的 >
 const defaultTagRE = /\{\{((?:.|\r?\n)+?)\}\}/g
 
 export function parseHTML(template) {
+  // ast树 表示 html的语法
+  let root = null; // 树根
+  let currentParent;
+  let stack = []; // 栈型结构用来判断标签是否正常闭合
+  // 利用常见的数据结构来解析标签 [div, span]
+  // <div id="app" class='a'><span>123</span>hello {{msg}} {{age}} </div>
 
+  function creatASTElement(tagName, attrs) {
+    return {
+      tag: tagName,
+      attrs,
+      children: [],
+      parent: null,
+      type: 1 // 1 普通元素 3 文本
+    }
+  }
+
+  // 每次解析开始标签都会执行此方法
   function start(tagName, attrs) {
-    console.log(tagName, attrs);
+    let element = creatASTElement(tagName, attrs);
+    !root && (root = element); // 只有第一次是根;
+    currentParent = element;
+    stack.push(element);
   }
 
+  // 结束标签 确立父子关系
   function end(tagName) {
-    console.log(tagName);
+    let element = stack.pop();
+    let parent = stack[stack.length - 1];
+    if (parent) {
+      element.parent = parent;
+      parent.children.push(element);
+    }
   }
 
+  // 文本
   function chars(text) {
-    console.log(text);
+    text = text.replace(/\s/g, '');
+    if (text) {
+      currentParent.children.push({
+        type: 3,
+        text,
+      })
+    }
   }
 
 
@@ -79,4 +112,6 @@ export function parseHTML(template) {
       }
     }
   }
+
+  return root;
 }

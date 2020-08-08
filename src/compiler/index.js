@@ -6,6 +6,8 @@ export function compileToFunctions(template) {
 
   let ast = parseHTML(template);
 
+  console.log(ast);
+
   // 模版编译原理
   // 1. 先把我们的代码转化成ast语法树 parser 解析（正则）
   // 2. 标记静态树
