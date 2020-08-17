@@ -11,8 +11,10 @@ export function parseHTML(template) {
   let root = null; // 树根
   let currentParent;
   let stack = []; // 栈型结构用来判断标签是否正常闭合
+  // 常见的数据结构 栈 队列 数组 链表 集合 hash表 树
   // 利用常见的数据结构来解析标签 [div, span]
   // <div id="app" class='a'><span>123</span>hello {{msg}} {{age}} </div>
+  // vue 2.0 只能有一个根节点 必须是html 元素
 
   function creatASTElement(tagName, attrs) {
     return {

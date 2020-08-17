@@ -41,7 +41,7 @@
       // 将html本身变成js语法 render函数
 
       // 如何将模版变成 render函数 =》返回的是虚拟节点
-      template: `<div id="app" class='a'><span>123</span>hello {{msg}} {{age}} </div>`,
+      template: `<div id="app" class='a' style="color:red"><span>helloWorld {{msg}} aa </span></div>`
       // render() { // vue 虚拟dom（跨平台）
       //   with(vm._data) {
       //     return _c('div', {class: 'a'}, _c('span', null, 123), _v('hello')+_v(msg)+_v(age))
@@ -49,7 +49,7 @@
       // }
     })
 
-    // console.log(vm);
+    // console.log(vm.msg);
     vm._data.arr.push({a: 2});
   </script>
 </body>

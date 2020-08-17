@@ -1,5 +1,6 @@
 import {initState} from './state';
-import { compileToFunctions } from './compiler/index';
+import {compileToFunctions} from './compiler/index';
+import {mountComponent} from './lifecycle.js';
 
 export function initMixin(Vue) {
   Vue.prototype._init = function(options) {
@@ -20,7 +21,7 @@ export function initMixin(Vue) {
 
   Vue.prototype.$mount = function(el) { // 可能是字符串 也可以传入一个dom对象
     const vm = this;
-    el = document.querySelector(el); // 获取el属性
+    el = vm.$el = document.querySelector(el); // 获取el属性
 
     // 如果同时传入了 template 和 render 默认会产用render 抛弃template，如果都没有传就是用id=“app”中的模版
     const opts = vm.$options;
@@ -34,7 +35,8 @@ export function initMixin(Vue) {
       const render = compileToFunctions(template);
       opts.render = render;
     }
-
     // 走到这里说明不需要编译了，因为用户传入的就是一个 render 函数
+
+    mountComponent(vm, el);
   }
 }

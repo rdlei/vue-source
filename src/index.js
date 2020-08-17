@@ -1,4 +1,6 @@
 import {initMixin} from './init';
+import {renderMixin} from './render';
+import {lifeCycleMixin} from './lifecycle';
 
 function Vue(options) {
   // 内部要进行初始化的操作
@@ -6,5 +8,7 @@ function Vue(options) {
 }
 
 initMixin(Vue); // 添加原型的方法
+renderMixin(Vue);
+lifeCycleMixin(Vue);
 
 export default Vue;
