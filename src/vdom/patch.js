@@ -37,7 +37,7 @@ function createElm(vnode) { // 需要递归创建
 function updateProperties(vnode) {
   let {el} = vnode;
   let newProps = vnode.data || {};
-  console.log('el', el, 'newProps', newProps);
+  // console.log('el', el, 'newProps', newProps);
   for (let propName in newProps) {
     if (propName === 'style') {
       for (let styleName in newProps[propName]) {// {color: "red"}

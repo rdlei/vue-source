@@ -17,6 +17,8 @@ export function mountComponent(vm, el) {
 
   // 每次数据变化 就执行 updateComponent 方法进行更新操作
 
+  callHook(vm, 'beforeMount') // 组件挂载之前
+
   const updateComponent = () => {
     // 内部会调用刚才我们解析后的render方法 =》vNode
     // _render => options.render 方法
@@ -26,4 +28,15 @@ export function mountComponent(vm, el) {
   };
   // 每次数据变化 就执行 updateComponent 方法 进行更新操作
   new Watcher(vm, updateComponent, () => {}, true);
+
+  callHook(vm, 'mounted'); // 组件挂载之后
+}
+
+export function callHook(vm, hookName) {
+  let handlers = vm.$options[hookName];
+  if (handlers && handlers.length) {
+    for(let i = 0, len = handlers.length; i < len; i++) {
+      handlers[i].call(vm); // 所有生命周期的this 指向的都是当前的实例
+    }
+  }
 }
