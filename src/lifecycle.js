@@ -24,6 +24,7 @@ export function mountComponent(vm, el) {
     // _render => options.render 方法
     // _update => 将虚拟dom 变成真实dom 来执行
     vm._update(vm._render());
+    console.log('update');
 
   };
   // 每次数据变化 就执行 updateComponent 方法 进行更新操作
@@ -32,11 +33,11 @@ export function mountComponent(vm, el) {
   callHook(vm, 'mounted'); // 组件挂载之后
 }
 
-export function callHook(vm, hookName) {
-  let handlers = vm.$options[hookName];
+export function callHook(vm, hookName) { // vm.$options
+  let handlers = vm.$options[hookName]; // 典型的设计模式: 发布订阅模式
   if (handlers && handlers.length) {
-    for(let i = 0, len = handlers.length; i < len; i++) {
-      handlers[i].call(vm); // 所有生命周期的this 指向的都是当前的实例
+    for(let i = 0, len = handlers.length; i < len; i++) { // [fn, fn, fn]
+      handlers[i].call(vm); // 所有的生命周期的this 指向的都是当前的实例
     }
   }
 }

@@ -38,7 +38,7 @@
       data() {
         return {
           msg: 'rdlei',
-          age: '',
+          age: '10',
           a: {
             msg: 'msg_a',
           },
@@ -63,7 +63,7 @@
       // 将html本身变成js语法 render函数
 
       // 如何将模版变成 render函数 =》返回的是虚拟节点
-      template: `<div id="app" class='a' style="color:red"><span>helloWorld {{msg}} aa </span></div>`
+      template: `<div id="app" class='a' style="color:red"><span>helloWorld {{msg}} {{msg}} {{age}} aa </span></div>`
       // render() { // vue 虚拟dom（跨平台）
       //   with(vm._data) {
       //     return _c('div', {class: 'a'}, _c('span', null, 123), _v('hello')+_v(msg)+_v(age))
@@ -73,6 +73,22 @@
 
     // console.log(vm.msg);
     vm._data.arr.push({a: 2});
+
+    setTimeout(() => {
+      // *给每一个属性 增加一个dep属性 这个属性里可以包含多个watcher【渲染watcher 计算属性watcher watch 对应的watcher】
+      vm.msg = 'hl'; // *记录一下当前这个msg 对应了一个watcher
+      vm.msg = 'aaa';
+      vm.msg = 'bbb';
+      vm.age = 15;
+
+      // vm._update(vm._render())
+      vm.$nextTick(() => {
+        console.log(app.innerHTML);
+      });
+      // Vue中的异步更新策略
+    }, 1000);
+    // vue中实现了响应式系统 就是如果属性变化了 视图会自动更新
+    // 依赖收集 每个属性 都会对应 一个自己重新渲染的方法 watcher
   </script>
 </body>
 </html>
